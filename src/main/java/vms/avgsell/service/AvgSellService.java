@@ -45,6 +45,7 @@ public class AvgSellService {
 		addToMapSensors(sensorProd);
 		LocalDate currentDate = LocalDate.now();
 		if (currentDate.isAfter(dateRecord)) {
+			log.info("DATA SAVED IN DB");
 			writeRecordsInBD(machinesSensorsQuantity);
 			machinesSensorsQuantity.clear();
 			dateRecord = currentDate;
