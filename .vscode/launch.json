@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - AvgsellApplication",
+      "request": "launch",
+      "mainClass": "vms.avgsell.AvgsellApplication",
+      "projectName": "avgsell"
+    }
+  ]
+}

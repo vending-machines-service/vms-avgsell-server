@@ -14,10 +14,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
-@Table(name ="selling")
+@Table(name = "selling")
 @Entity
-@Getter @Setter @NoArgsConstructor @ToString @EqualsAndHashCode
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class SensorProductJpa {
 	@Id
 	@GeneratedValue
@@ -30,8 +33,7 @@ public class SensorProductJpa {
 	public int sensorId;
 	public int quantity;
 	public int userId;
-	
-	
+
 	public SensorProductJpa(LocalDate date, int machineId, int sensorId, int quantity, int userId) {
 		super();
 		this.date = date;
@@ -40,7 +42,5 @@ public class SensorProductJpa {
 		this.quantity = quantity;
 		this.userId = userId;
 	}
-
-
 
 }
