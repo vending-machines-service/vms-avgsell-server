@@ -32,15 +32,13 @@ public class SensorProductJpa {
 	@Column(name = "product_id")
 	public int productId;
 	public int quantity;
-	public int userId;
 
-	public SensorProductJpa(LocalDate date, int machineId, int productId, int quantity, int userId) {
+	public SensorProductJpa(LocalDate date, int machineId, int productId, int quantity) {
 		super();
 		this.date = date;
 		this.machineId = machineId;
 		this.productId = productId;
 		this.quantity = quantity;
-		this.userId = userId;
 	}
 
 }
