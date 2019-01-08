@@ -30,15 +30,15 @@ public class SensorProductJpa {
 	@Column(name = "machine_id")
 	public int machineId;
 	@Column(name = "product_id")
-	public int sensorId;
+	public int productId;
 	public int quantity;
 	public int userId;
 
-	public SensorProductJpa(LocalDate date, int machineId, int sensorId, int quantity, int userId) {
+	public SensorProductJpa(LocalDate date, int machineId, int productId, int quantity, int userId) {
 		super();
 		this.date = date;
 		this.machineId = machineId;
-		this.sensorId = sensorId;
+		this.productId = productId;
 		this.quantity = quantity;
 		this.userId = userId;
 	}
