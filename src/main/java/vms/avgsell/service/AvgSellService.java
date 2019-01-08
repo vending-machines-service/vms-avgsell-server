@@ -36,16 +36,16 @@ public class AvgSellService {
 
 	@Autowired
 	AvgSellRepository repo;
-	
+
 	@Autowired
 	MachinesSqlRepository machineRepo;
 
 	ObjectMapper mapper = new ObjectMapper();
 	long timestameAvgPeriod = System.currentTimeMillis();
 	long timestameUpdatePeriod = System.currentTimeMillis();
-	@Value("$(avg_period_avgsell_service:30000}")
+	@Value("${avg_period_avgsell_service:5000}")
 	long avgPeriod;
-	@Value("$(update_period_avgsell_service:1200000}")
+	@Value("${update_period_avgsell_service:5000}")
 	long updatePeriod;
 
 	Map<Integer, Map<Integer, Integer>> machinesSensorsQuantity = new HashMap<>();
@@ -55,18 +55,18 @@ public class AvgSellService {
 	@StreamListener(Sink.INPUT)
 	public void getStaticInfoBySensor(String jsonSensor) throws JsonParseException, JsonMappingException, IOException {
 		SensorData sensorProd = mapper.readValue(jsonSensor, SensorData.class);
-		log.info("MACHINE: {}; SENSOR:{}; VALUE: {}] ", sensorProd.getMachineId(),
-          sensorProd.getSensorId(), sensorProd.getValue());
+		log.info("MACHINE: {}; SENSOR:{}; VALUE: {}] ", sensorProd.getMachineId(), sensorProd.getSensorId(),
+				sensorProd.getValue());
 		addToMapSensors(sensorProd);
 		addMapSensorProduct(sensorProd);
 		if (System.currentTimeMillis() - timestameAvgPeriod > avgPeriod) {
 			log.info("DATA SAVED IN DB");
 			writeRecordsInBD(machinesSensorsQuantity);
 			machinesSensorsQuantity.clear();
-			timestameAvgPeriod= System.currentTimeMillis();
+			timestameAvgPeriod = System.currentTimeMillis();
 		}
-		
-		if(System.currentTimeMillis() - timestameUpdatePeriod > updatePeriod) {
+
+		if (System.currentTimeMillis() - timestameUpdatePeriod > updatePeriod) {
 			machinesSensorProduct.clear();
 			timestameUpdatePeriod = System.currentTimeMillis();
 		}
@@ -74,17 +74,15 @@ public class AvgSellService {
 	}
 
 	private void addMapSensorProduct(SensorData sensorProd) {
-		if(machinesSensorProduct.get(sensorProd.machineId) == null) {
+		if (machinesSensorProduct.get(sensorProd.machineId) == null) {
 			MachineJPA jpa = machineRepo.findById(sensorProd.machineId).orElse(null);
-			if(jpa !=null) {
+			if (jpa != null) {
 				MachineDTO dto = jpa.convertJPAtoDTO();
 				machinesSensorProduct.put(dto.machineId, dto.sensorProduct);
-			} 
-			
-		}  
-		
+			}
+		}
 	}
-	
+
 	private void addToMapSensors(SensorData sensorProd) {
 		machinesSensorsQuantity.putIfAbsent(sensorProd.machineId, new HashMap<>());
 		Map<Integer, Integer> sensorsQuantity = machinesSensorsQuantity.get(sensorProd.machineId);
@@ -108,7 +106,7 @@ public class AvgSellService {
 			machineId = map.getKey();
 			for (Map.Entry<Integer, Integer> mapp : map.getValue().entrySet()) {
 				Map<Integer, Integer> sensProd = machinesSensorProduct.get(machineId);
-				if(sensProd != null) {
+				if (sensProd != null) {
 					writeRecord(machineId, sensProd.get(mapp.getKey()), mapp.getValue());
 				}
 			}
@@ -118,8 +116,7 @@ public class AvgSellService {
 	@Transactional
 	private void writeRecord(int machineId, int productId, int count) {
 		SensorProductJpa record = new SensorProductJpa(LocalDate.now(), machineId, productId, count, 0);
+		log.warn("SAVE RECORD ID: {} - {}", machineId, productId);
 		repo.save(record);
-
 	}
-
 }
