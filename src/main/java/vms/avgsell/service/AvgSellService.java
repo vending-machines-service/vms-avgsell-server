@@ -115,7 +115,6 @@ public class AvgSellService {
 	@Transactional
 	private void writeRecord(int machineId, int productId, int count) {
 		SensorProductJpa record = new SensorProductJpa(LocalDate.now(), machineId, productId, count);
-		log.warn("SAVE RECORD ID: {} - {}", machineId, productId);
 		repo.save(record);
 	}
 }
