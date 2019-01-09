@@ -78,8 +78,8 @@ public class AvgSellService {
 			MachineJPA jpa = machineRepo.findById(sensorProd.machineId).orElse(null);
 			log.warn("MACHINEJPA ----------:{}", jpa);
 			if (jpa != null) {
-			log.warn("MACHINE DOES NOT EXISTS");
-				MachineDTO dto = jpa.convertJPAtoDTO();
+			MachineDTO dto = jpa.convertJPAtoDTO();
+				log.warn("DTO MAP<SENSORID, PRODUCTID>", dto.sensorProduct);
 				machinesSensorProduct.put(dto.machineId, dto.sensorProduct);
 			}
 		}
@@ -111,9 +111,9 @@ public class AvgSellService {
 			for (Map.Entry<Integer, Integer> mapp : map.getValue().entrySet()) {
 				log.warn("SENSOR ID TO SAVE: {}");
 				Map<Integer, Integer> sensProd = machinesSensorProduct.get(machineId);
-				log.warn("NEXT STEP SENSOR ID TO SAVE: {}", sensProd.get(mapp.getKey()));
+				log.warn("NEXT STEP MAP SNSORPRODUCT: {}", sensProd.get(mapp.getKey()));
 				if (sensProd.get(mapp.getKey()) != null) {
-					log.warn("MACHINE DOES NOT EXISTS");
+					log.warn("KEY PRODOCT ID +*******************", sensProd.get(mapp.getKey()));
 					writeRecord(machineId, sensProd.get(mapp.getKey()), mapp.getValue());
 					// writeRecord(machineId, mapp.getKey(), mapp.getValue());
 				}
