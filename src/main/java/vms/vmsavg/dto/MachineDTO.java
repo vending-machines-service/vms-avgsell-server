@@ -1,4 +1,4 @@
-package vms.avgsell.dto;
+package vms.vmsavg.dto;
 
 import java.util.Map;
 
@@ -8,14 +8,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter @NoArgsConstructor @ToString @EqualsAndHashCode
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class MachineDTO {
 
   public int machineId;
   public String firmName;
   public String location;
   public Map<Integer, Integer> sensorProduct;
-  
 
   public MachineDTO(int machineId, String firmName, String location, Map<Integer, Integer> sensorProduct) {
     super();
@@ -23,5 +26,5 @@ public class MachineDTO {
     this.firmName = firmName;
     this.location = location;
     this.sensorProduct = sensorProduct;
-  	}
+  }
 }

@@ -1,4 +1,4 @@
-package vms.avgsell.entity;
+package vms.vmsavg.entity;
 
 import java.time.LocalDate;
 

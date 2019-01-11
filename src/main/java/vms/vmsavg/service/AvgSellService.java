@@ -1,4 +1,4 @@
-package vms.avgsell.service;
+package vms.vmsavg.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -15,17 +15,17 @@ import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import vms.vmsavg.dto.MachineDTO;
+import vms.vmsavg.dto.SensorData;
+import vms.vmsavg.entity.MachineJPA;
+import vms.vmsavg.entity.SensorProductJpa;
+import vms.vmsavg.repo.AvgSellRepository;
+import vms.vmsavg.repo.MachinesSqlRepository;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import vms.avgsell.dto.MachineDTO;
-import vms.avgsell.dto.SensorData;
-import vms.avgsell.entity.MachineJPA;
-import vms.avgsell.entity.SensorProductJpa;
-import vms.avgsell.repo.AvgSellRepository;
-import vms.avgsell.repo.MachinesSqlRepository;
 
 @Service
 @Slf4j
@@ -76,24 +76,24 @@ public class AvgSellService {
 			}
 		}
 	}
-	
+
 	private void addToMapSensors(SensorData sensorProd) {
 		machinesSensorsQuantity.putIfAbsent(sensorProd.machineId, new HashMap<>());
 		Map<Integer, Integer> sensorsQuantity = machinesSensorsQuantity.get(sensorProd.machineId);
 		sensorsQuantity.putIfAbsent(sensorProd.sensorId, 0);
-		
+
 		machinesStateLast.putIfAbsent(sensorProd.machineId, new HashMap<>());
 		Map<Integer, Integer> sensorsStateLast = machinesStateLast.get(sensorProd.machineId);
 		sensorsStateLast.putIfAbsent(sensorProd.sensorId, sensorProd.value);
 		int lastQuantity = sensorsStateLast.get(sensorProd.sensorId);
-		
+
 		if (lastQuantity > sensorProd.value) {
 			sensorsQuantity.merge(sensorProd.sensorId, lastQuantity - sensorProd.value, (v1, v2) -> v1 + v2);
 			sensorsStateLast.put(sensorProd.sensorId, sensorProd.value);
 		}
-		
+
 	}
-	
+
 	public void writeRecordsInBD(Map<Integer, Map<Integer, Integer>> machinesSensorsQuantity) {
 		log.warn("machinesSensorsQuantity: {}", machinesSensorsQuantity);
 		int machineId = -1;

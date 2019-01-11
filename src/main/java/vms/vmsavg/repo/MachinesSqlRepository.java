@@ -1,9 +1,8 @@
-package vms.avgsell.repo;
-
+package vms.vmsavg.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import vms.avgsell.entity.MachineJPA;
+import vms.vmsavg.entity.MachineJPA;
 
 public interface MachinesSqlRepository extends JpaRepository<MachineJPA, Integer> {
 

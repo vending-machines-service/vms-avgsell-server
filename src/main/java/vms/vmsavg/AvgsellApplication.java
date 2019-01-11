@@ -1,4 +1,4 @@
-package vms.avgsell;
+package vms.vmsavg;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,4 +11,3 @@ public class AvgsellApplication {
 	}
 
 }
-

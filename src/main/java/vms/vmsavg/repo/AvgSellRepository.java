@@ -1,8 +1,8 @@
-package vms.avgsell.repo;
+package vms.vmsavg.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import vms.avgsell.entity.SensorProductJpa;
+import vms.vmsavg.entity.SensorProductJpa;
 
 public interface AvgSellRepository extends JpaRepository<SensorProductJpa, Integer> {
 

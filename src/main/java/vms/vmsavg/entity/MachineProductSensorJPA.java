@@ -1,13 +1,9 @@
-package vms.avgsell.entity;
+package vms.vmsavg.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -29,26 +25,24 @@ public class MachineProductSensorJPA {
   @GeneratedValue
   int id;
 
-
-  @Column(name="machine_id")
+  @Column(name = "machine_id")
   int machineId;
- 
+
   @Column(name = "product_id")
   int productId;
-  
+
   @Column(name = "sensor_id")
   int sensorId;
-  
+
   @Column(name = "product_name")
   String productName;
 
-public MachineProductSensorJPA(int machineId, int sensorId, int productId, String productName) {
-	super();
-	this.machineId = machineId;
-	this.productId = productId;
-	this.sensorId = sensorId;
-	this.productName = productName;
-}
+  public MachineProductSensorJPA(int machineId, int sensorId, int productId, String productName) {
+    super();
+    this.machineId = machineId;
+    this.productId = productId;
+    this.sensorId = sensorId;
+    this.productName = productName;
+  }
 
-  
 }
